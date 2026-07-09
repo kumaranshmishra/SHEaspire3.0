@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HerWellness - AI-Powered Women's Health</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         * {
             margin: 0;
@@ -11,466 +13,1511 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #faf7ff;
-            color: #1a1a2e;
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #ec4899;
+            --gradient: linear-gradient(135deg, #8b5cf6, #ec4899);
+            --gradient-hover: linear-gradient(135deg, #7c3aed, #db2777);
+            --text-dark: #1a1a2e;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+            --shadow-hover: 0 30px 80px rgba(139, 92, 246, 0.3);
         }
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
-            padding: 20px 5%;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #faf7ff;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf7ff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient);
+            border-radius: 10px;
+        }
+
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader p {
+            color: white;
+            margin-top: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            animation: pulse-text 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse-text {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: white;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .logo span {
-            color: #ffd700;
-        }
-
-        .nav a {
-            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--primary);
             text-decoration: none;
-            margin-left: 30px;
+            position: relative;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .logo .badge {
+            position: absolute;
+            top: -8px;
+            right: -35px;
+            font-size: 0.5rem;
+            background: var(--gradient);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
             font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
         }
 
-        .nav a:hover {
-            text-decoration: underline;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Hero */
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white !important;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary::after {
+            display: none;
+        }
+
+        /* Hero Section */
         .hero {
-            padding: 80px 5%;
+            padding: 10rem 5% 5rem;
+            background: linear-gradient(135deg, #faf7ff 0%, #ede9fe 50%, #fce7f3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float-bg 20s ease-in-out infinite;
+        }
+
+        @keyframes float-bg {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-50px, 30px) scale(1.1);
+            }
+        }
+
+        .hero-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .hero-content h1 {
+            font-size: 4.2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 .highlight {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 550px;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-secondary:hover::before {
+            left: 0;
+        }
+
+        .btn-secondary:hover {
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .hero-stats .stat {
             text-align: center;
-            background: linear-gradient(135deg, #faf7ff, #ede9fe);
+            animation: fadeInUp 1.2s ease;
         }
 
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        .hero-stats .stat h3 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
-            font-size: 20px;
-            color: #6b7280;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
+        .hero-stats .stat p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
+        .hero-visual {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero-visual .circle {
+            width: 400px;
+            height: 400px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-circle 3s ease-in-out infinite;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(139, 92, 246, 0.3);
+        }
+
+        @keyframes pulse-circle {
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 30px 80px rgba(139, 92, 246, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 40px 100px rgba(139, 92, 246, 0.5);
+            }
+        }
+
+        .hero-visual .circle i {
+            font-size: 8rem;
+            color: white;
+            opacity: 0.9;
+            animation: float-icon 4s ease-in-out infinite;
+        }
+
+        @keyframes float-icon {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .hero-visual .floating-card {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            animation: float-card 6s ease-in-out infinite;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        @keyframes float-card {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-25px) rotate(2deg);
+            }
+        }
+
+        .hero-visual .floating-card:nth-child(2) {
+            top: 5%;
+            right: -10%;
+            animation-delay: 1s;
+        }
+
+        .hero-visual .floating-card:nth-child(3) {
+            bottom: 5%;
+            left: -10%;
+            animation-delay: 2s;
+        }
+
+        .hero-visual .floating-card:nth-child(4) {
+            top: 50%;
+            right: -15%;
+            animation-delay: 0.5s;
+        }
+
+        .hero-visual .floating-card i {
+            font-size: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-visual .floating-card span {
             font-weight: 600;
-            margin: 5px;
-            transition: 0.3s;
+            font-size: 0.9rem;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
-            color: white;
+        /* Section Styles */
+        section {
+            padding: 5rem 5%;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #8b5cf6;
-            border: 2px solid #8b5cf6;
-        }
-
-        .btn-secondary:hover {
-            background: #8b5cf6;
-            color: white;
-        }
-
-        /* Features */
-        .features {
-            padding: 60px 5%;
-            background: white;
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-title {
             text-align: center;
-            font-size: 36px;
-            margin-bottom: 10px;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-title .highlight {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .section-subtitle {
             text-align: center;
-            color: #6b7280;
-            margin-bottom: 40px;
-            font-size: 18px;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
         }
 
-        .grid {
+        /* Features */
+        .features {
+            background: white;
+        }
+
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .card {
-            background: white;
-            padding: 25px;
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(139, 92, 246, 0.06);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-card .icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
             border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            transition: 0.3s;
-            border-left: 4px solid #8b5cf6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 1.2rem;
+            transition: all 0.5s ease;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.15);
+        .feature-card:hover .icon {
+            transform: rotate(10deg) scale(1.1);
         }
 
-        .card .icon {
-            font-size: 30px;
-            margin-bottom: 10px;
+        .feature-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
         }
 
-        .card h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            color: #1a1a2e;
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        .card p {
-            color: #6b7280;
-            line-height: 1.6;
-            font-size: 14px;
+        .feature-card .learn-more {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        /* Stats */
-        .stats {
-            padding: 60px 5%;
+        .feature-card .learn-more:hover {
+            transform: translateX(5px);
+        }
+
+        /* How It Works */
+        .how-it-works {
             background: linear-gradient(135deg, #faf7ff, #ede9fe);
         }
 
-        .stats-grid {
+        .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
             max-width: 1000px;
             margin: 0 auto;
+        }
+
+        .step {
             text-align: center;
+            animation: fadeInUp 1s ease;
         }
 
-        .stat-item h3 {
-            font-size: 36px;
-            color: #8b5cf6;
+        .step .number {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 auto 1.2rem;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+            transition: all 0.5s ease;
         }
 
-        .stat-item p {
-            color: #6b7280;
-            font-size: 16px;
+        .step:hover .number {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .step h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--text-light);
+            font-size: 0.95rem;
         }
 
         /* Tech Stack */
-        .tech {
-            padding: 60px 5%;
+        .tech-stack {
             background: white;
         }
 
-        .tech-list {
+        .tech-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: 1.5rem;
             max-width: 900px;
             margin: 0 auto;
         }
 
         .tech-item {
-            background: #ede9fe;
-            padding: 10px 25px;
+            background: var(--gradient);
+            color: white;
+            padding: 0.8rem 1.8rem;
             border-radius: 50px;
             font-weight: 600;
-            color: #8b5cf6;
-            transition: 0.3s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .tech-item:hover::before {
+            left: 100%;
         }
 
         .tech-item:hover {
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Impact */
+        .impact {
+            background: linear-gradient(135deg, #1a1a2e, #2d1b69);
             color: white;
-            transform: translateY(-3px);
+        }
+
+        .impact .section-title .highlight {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .impact .section-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .impact-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .impact-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .impact-card i {
+            font-size: 2.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .impact-card .counter {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .impact-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
         }
 
         /* CTA */
         .cta {
-            padding: 60px 5%;
+            background: var(--gradient);
             text-align: center;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
             color: white;
+            padding: 5rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
+            border-radius: 50%;
+            animation: float-bg 15s ease-in-out infinite;
         }
 
         .cta h2 {
-            font-size: 36px;
-            margin-bottom: 15px;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .cta p {
-            font-size: 18px;
-            margin-bottom: 30px;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
             opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
         .cta .btn-primary {
             background: white;
-            color: #8b5cf6;
+            color: var(--primary);
+            position: relative;
+            z-index: 1;
         }
 
         .cta .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
         .cta .btn-secondary {
             border-color: white;
             color: white;
+            position: relative;
+            z-index: 1;
         }
 
         .cta .btn-secondary:hover {
             background: white;
-            color: #8b5cf6;
+            color: var(--primary);
         }
 
         /* Footer */
-        .footer {
+        footer {
             background: #1a1a2e;
             color: white;
-            padding: 40px 5%;
-            text-align: center;
+            padding: 3rem 5%;
         }
 
-        .footer p {
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-brand h3 i {
+            color: var(--secondary);
+        }
+
+        .footer-brand p {
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-links a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
             opacity: 0.7;
         }
 
+        /* Notification Popup */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-hover);
+            transform: translateX(120%);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            font-size: 1.5rem;
+        }
+
         /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 32px;
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 8rem;
             }
 
-            .nav a {
-                margin-left: 15px;
-                font-size: 14px;
+            .hero-content p {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-visual .circle {
+                width: 300px;
+                height: 300px;
+            }
+
+            .hero-visual .circle i {
+                font-size: 5rem;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
             }
 
             .section-title {
-                font-size: 28px;
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 2rem;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                gap: 1.5rem;
             }
 
-            .grid {
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                cursor: pointer;
+            }
+
+            .hamburger span {
+                width: 25px;
+                height: 3px;
+                background: var(--text-dark);
+                border-radius: 5px;
+                transition: 0.3s ease;
+            }
+
+            .hero {
+                padding-top: 7rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-visual .circle {
+                width: 220px;
+                height: 220px;
+            }
+
+            .hero-visual .circle i {
+                font-size: 3.5rem;
+            }
+
+            .hero-visual .floating-card {
+                display: none;
+            }
+
+            .hero-stats {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .features-grid {
                 grid-template-columns: 1fr;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cta h2 {
+                font-size: 2rem;
+            }
+
+            .tech-grid {
+                gap: 0.8rem;
+            }
+
+            .tech-item {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            .notification {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
             }
         }
 
         @media (max-width: 480px) {
-            .header {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav a {
-                margin: 0 10px;
-                font-size: 13px;
-            }
-
-            .hero h1 {
-                font-size: 26px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .btn {
-                padding: 12px 25px;
-                font-size: 14px;
-                display: block;
-                margin: 10px auto;
-                width: 80%;
-            }
-
-            .stats-grid {
+            .impact-grid {
                 grid-template-columns: 1fr;
             }
 
-            .cta h2 {
-                font-size: 26px;
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">💜 Her<span>Wellness</span></div>
-        <nav class="nav">
-            <a href="#features">Features</a>
-            <a href="#tech">Tech</a>
-            <a href="#cta">Get Started</a>
-        </nav>
-    </header>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p>Loading HerWellness...</p>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationMessage">Welcome to HerWellness! 🌸</span>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">
+            <i class="fas fa-heartbeat"></i>
+            HerWellness
+            <span class="badge">AI</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#features" onclick="showNotification('Exploring Features...')">Features</a></li>
+            <li><a href="#how-it-works" onclick="showNotification('How It Works...')">How It Works</a></li>
+            <li><a href="#tech" onclick="showNotification('Viewing Tech Stack...')">Tech Stack</a></li>
+            <li><a href="#impact" onclick="showNotification('Our Impact...')">Impact</a></li>
+            <li><a href="#cta" class="btn-primary" onclick="showNotification('Let\'s get started! 🚀')">Get Started</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
 
     <!-- Hero -->
-    <section class="hero">
-        <h1>Your AI-Powered <span class="highlight">Women's Health</span> Platform</h1>
-        <p>Empowering women with personalized health tracking, AI-driven insights, and comprehensive wellness support.</p>
-        <a href="#cta" class="btn btn-primary">🚀 Get Started</a>
-        <a href="#features" class="btn btn-secondary">📋 Explore Features</a>
-    </section>
-
-    <!-- Features -->
-    <section class="features" id="features">
-        <h2 class="section-title">Comprehensive Wellness Features</h2>
-        <p class="section-subtitle">Everything you need for your health journey — all in one place.</p>
-        <div class="grid">
-            <div class="card">
-                <div class="icon">📅</div>
-                <h3>AI Menstrual Tracker</h3>
-                <p>Predict your cycle, fertile windows, and ovulation with AI-powered insights.</p>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-sparkles"></i> AI-Powered Healthcare
             </div>
-            <div class="card">
-                <div class="icon">👶</div>
-                <h3>Pregnancy Care</h3>
-                <p>Week-by-week updates, fetal development tracking, and nutrition guidance.</p>
+            <h1>
+                Your AI-Powered<br />
+                <span class="highlight">Women's Health</span><br />
+                Wellness Platform
+            </h1>
+            <p>
+                HerWellness empowers women with personalized health tracking, AI-driven insights, and comprehensive wellness support — all in one intelligent platform.
+            </p>
+            <div class="hero-buttons">
+                <a href="#cta" class="btn-primary" onclick="showNotification('Starting your wellness journey! 🌟')">
+                    <i class="fas fa-rocket"></i> Get Started
+                </a>
+                <a href="#features" class="btn-secondary" onclick="showNotification('Exploring features...')">
+                    <i class="fas fa-play"></i> Explore Features
+                </a>
             </div>
-            <div class="card">
-                <div class="icon">❤️</div>
-                <h3>Reproductive Health</h3>
-                <p>Confidential records for PCOS, endometriosis, and hormonal health.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3 id="stat1">50K+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat">
+                    <h3 id="stat2">98%</h3>
+                    <p>Satisfaction Rate</p>
+                </div>
+                <div class="stat">
+                    <h3 id="stat3">24/7</h3>
+                    <p>AI Support</p>
+                </div>
             </div>
-            <div class="card">
-                <div class="icon">🧠</div>
-                <h3>Mental Wellness</h3>
-                <p>Mood tracking, stress assessments, meditation, and emotional check-ins.</p>
+        </div>
+        <div class="hero-visual">
+            <div class="circle">
+                <i class="fas fa-female"></i>
             </div>
-            <div class="card">
-                <div class="icon">💪</div>
-                <h3>Fitness Planner</h3>
-                <p>Personalized workouts for menstruation, pregnancy, postpartum, and more.</p>
+            <div class="floating-card">
+                <i class="fas fa-calendar-check"></i>
+                <span>Cycle Tracking</span>
             </div>
-            <div class="card">
-                <div class="icon">🥗</div>
-                <h3>Nutrition Assistant</h3>
-                <p>Customized meal plans and nutrient recommendations for your lifestyle.</p>
+            <div class="floating-card">
+                <i class="fas fa-brain"></i>
+                <span>Mental Wellness</span>
             </div>
-            <div class="card">
-                <div class="icon">🤖</div>
-                <h3>AI Health Assistant</h3>
-                <p>Conversational AI answering your health questions in easy language.</p>
-            </div>
-            <div class="card">
-                <div class="icon">🔔</div>
-                <h3>Smart Reminders</h3>
-                <p>Never miss medications, appointments, or checkups with smart alerts.</p>
-            </div>
-            <div class="card">
-                <div class="icon">📁</div>
-                <h3>Digital Health Records</h3>
-                <p>Securely store reports, prescriptions, and medical history.</p>
-            </div>
-            <div class="card">
-                <div class="icon">🆘</div>
-                <h3>Emergency Support</h3>
-                <p>Quick-access emergency contacts and nearby hospitals.</p>
-            </div>
-            <div class="card">
-                <div class="icon">🌍</div>
-                <h3>Multilingual Support</h3>
-                <p>Accessible in multiple regional languages for inclusivity.</p>
-            </div>
-            <div class="card">
-                <div class="icon">📶</div>
-                <h3>Offline Functionality</h3>
-                <p>Essential features work without internet. Syncs when online.</p>
+            <div class="floating-card">
+                <i class="fas fa-heart"></i>
+                <span>Pregnancy Care</span>
             </div>
         </div>
     </section>
 
-    <!-- Stats -->
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3>50K+</h3>
-                <p>Women Empowered</p>
+    <!-- Features -->
+    <section class="features" id="features">
+        <h2 class="section-title">
+            Comprehensive <span class="highlight">Wellness Features</span>
+        </h2>
+        <p class="section-subtitle">
+            Everything you need to support your health journey — from menstrual tracking to mental wellness, all in one place.
+        </p>
+        <div class="features-grid" id="featuresGrid">
+            <!-- Features will be dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title">
+            How <span class="highlight">HerWellness</span> Works
+        </h2>
+        <p class="section-subtitle">
+            Three simple steps to start your wellness journey with AI-powered guidance.
+        </p>
+        <div class="steps">
+            <div class="step">
+                <div class="number">1</div>
+                <h3>Create Your Profile</h3>
+                <p>Set up your health profile with age, lifestyle, health goals, and medical history for personalized recommendations.</p>
             </div>
-            <div class="stat-item">
-                <h3>15K+</h3>
-                <p>Pregnancies Monitored</p>
+            <div class="step">
+                <div class="number">2</div>
+                <h3>Track & Log</h3>
+                <p>Log your symptoms, mood, fitness, nutrition, and health data. The AI learns and adapts to your unique patterns.</p>
             </div>
-            <div class="stat-item">
-                <h3>30K+</h3>
-                <p>Wellness Sessions</p>
-            </div>
-            <div class="stat-item">
-                <h3>10+</h3>
-                <p>Languages Supported</p>
+            <div class="step">
+                <div class="number">3</div>
+                <h3>Receive Insights</h3>
+                <p>Get personalized recommendations, health insights, and proactive alerts to stay on top of your wellness journey.</p>
             </div>
         </div>
     </section>
 
     <!-- Tech Stack -->
-    <section class="tech" id="tech">
-        <h2 class="section-title">Technology Stack</h2>
-        <p class="section-subtitle">Built with modern, scalable technologies.</p>
-        <div class="tech-list">
-            <span class="tech-item">React.js</span>
-            <span class="tech-item">Flutter</span>
-            <span class="tech-item">HTML5</span>
-            <span class="tech-item">CSS3</span>
-            <span class="tech-item">JavaScript</span>
-            <span class="tech-item">Python</span>
-            <span class="tech-item">Flask</span>
-            <span class="tech-item">MongoDB</span>
-            <span class="tech-item">Machine Learning</span>
-            <span class="tech-item">NLP</span>
-            <span class="tech-item">Firebase</span>
-            <span class="tech-item">Firebase Auth</span>
+    <section class="tech-stack" id="tech">
+        <h2 class="section-title">
+            <span class="highlight">Technology</span> Stack
+        </h2>
+        <p class="section-subtitle">
+            Built with modern, scalable technologies to deliver a seamless healthcare experience.
+        </p>
+        <div class="tech-grid" id="techGrid">
+            <!-- Tech items will be dynamically loaded -->
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="impact" id="impact">
+        <h2 class="section-title">
+            Our <span class="highlight">Impact</span>
+        </h2>
+        <p class="section-subtitle">
+            Transforming women's healthcare through innovation, accessibility, and AI-driven insights.
+        </p>
+        <div class="impact-grid" id="impactGrid">
+            <!-- Impact cards will be dynamically loaded -->
         </div>
     </section>
 
     <!-- CTA -->
     <section class="cta" id="cta">
         <h2>Ready to Take Control of Your Health?</h2>
-        <p>Join thousands of women who trust HerWellness for personalized health support.</p>
-        <a href="#" class="btn btn-primary">📱 Download App</a>
-        <a href="#" class="btn btn-secondary">ℹ️ Learn More</a>
+        <p>
+            Join thousands of women who trust HerWellness for personalized, AI-powered health and wellness support.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1;">
+            <a href="#" class="btn-primary" onclick="showNotification('Downloading HerWellness App... 📱')">
+                <i class="fas fa-download"></i> Download App
+            </a>
+            <a href="#" class="btn-secondary" onclick="showNotification('Learning more about HerWellness... 📚')">
+                <i class="fas fa-info-circle"></i> Learn More
+            </a>
+        </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p>© 2026 HerWellness. Made with ❤️ for women's health.</p>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3><i class="fas fa-heartbeat"></i> HerWellness</h3>
+                <p>AI-Powered Women's Health & Wellness Platform</p>
+            </div>
+            <div class="footer-links">
+                <h4>Features</h4>
+                <a href="#" onclick="showNotification('Exploring Menstrual Tracker...')">Menstrual Tracker</a>
+                <a href="#" onclick="showNotification('Exploring Pregnancy Care...')">Pregnancy Care</a>
+                <a href="#" onclick="showNotification('Exploring Mental Wellness...')">Mental Wellness</a>
+                <a href="#" onclick="showNotification('Exploring Fitness Planner...')">Fitness Planner</a>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <a href="#" onclick="showNotification('About HerWellness...')">About Us</a>
+                <a href="#" onclick="showNotification('Careers at HerWellness...')">Careers</a>
+                <a href="#" onclick="showNotification('HerWellness Blog...')">Blog</a>
+                <a href="#" onclick="showNotification('Contact HerWellness...')">Contact</a>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="#" onclick="showNotification('Help Center...')">Help Center</a>
+                <a href="#" onclick="showNotification('Privacy Policy...')">Privacy Policy</a>
+                <a href="#" onclick="showNotification('Terms of Service...')">Terms of Service</a>
+                <a href="#" onclick="showNotification('Join Community...')">Community</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 HerWellness. All rights reserved. Made with <i class="fas fa-heart" style="color: #ec4899;"></i> for women's health.</p>
+        </div>
     </footer>
+
+    <script>
+        // ============================================
+        // BACKEND SIMULATION (Dynamic Data Loading)
+        // ============================================
+
+        // Feature Data
+        const featuresData = [
+            { icon: 'fa-calendar-alt', title: 'AI Menstrual & Ovulation Tracker', desc: 'Predict your cycle, fertile windows, and ovulation with AI-powered insights. Log symptoms to identify long-term health patterns.' },
+            { icon: 'fa-baby', title: 'Pregnancy & Maternal Care', desc: 'Week-by-week updates, fetal development tracking, appointment reminders, and nutrition guidance for expecting mothers.' },
+            { icon: 'fa-heart', title: 'Reproductive Health Monitoring', desc: 'Confidential records, educational content on PCOS, endometriosis, hormonal health, and fertility awareness.' },
+            { icon: 'fa-brain', title: 'Mental Wellness Support', desc: 'Daily mood tracking, stress assessments, guided meditation, journaling, and AI-based emotional check-ins.' },
+            { icon: 'fa-dumbbell', title: 'Personalized Fitness Planner', desc: 'Workouts tailored to your life stage — menstruation, pregnancy, postpartum, or menopause. Yoga, strength, and more.' },
+            { icon: 'fa-utensils', title: 'Smart Nutrition Assistant', desc: 'Customized meal plans, hydration targets, and nutrient recommendations based on your cycle, age, and activity level.' },
+            { icon: 'fa-robot', title: 'AI Health Assistant', desc: 'Conversational AI that answers your health questions using verified medical knowledge in easy-to-understand language.' },
+            { icon: 'fa-bell', title: 'Medication & Appointment Reminders', desc: 'Never miss a medicine, doctor appointment, vaccination, or prenatal checkup with smart reminders.' },
+            { icon: 'fa-file-medical-alt', title: 'Secure Digital Health Records', desc: 'Store and access reports, prescriptions, lab results, ultrasound images, and vaccination records securely.' },
+            { icon: 'fa-phone-alt', title: 'Emergency Support', desc: 'Quick-access emergency contacts and nearby hospitals. One-tap communication with trusted family members.' },
+            { icon: 'fa-language', title: 'Multilingual Accessibility', desc: 'Support for multiple regional languages to ensure inclusivity for women from diverse backgrounds.' },
+            { icon: 'fa-wifi-slash', title: 'Offline Functionality', desc: 'Essential features remain accessible without internet. Data syncs automatically when connectivity is restored.' }
+        ];
+
+        // Tech Stack Data
+        const techData = [
+            'React.js', 'Flutter', 'HTML5', 'CSS3', 'JavaScript',
+            'Python', 'Flask/FastAPI', 'MongoDB', 'Machine Learning',
+            'NLP', 'Firebase', 'Firebase Auth'
+        ];
+
+        // Impact Data
+        const impactData = [
+            { icon: 'fa-heartbeat', count: '50K+', label: 'Women Empowered' },
+            { icon: 'fa-baby', count: '15K+', label: 'Pregnancies Monitored' },
+            { icon: 'fa-brain', count: '30K+', label: 'Mental Wellness Sessions' },
+            { icon: 'fa-globe-asia', count: '10+', label: 'Languages Supported' }
+        ];
+
+        // ============================================
+        // DYNAMIC RENDER FUNCTIONS (Backend Simulation)
+        // ============================================
+
+        function renderFeatures() {
+            const grid = document.getElementById('featuresGrid');
+            grid.innerHTML = featuresData.map((feature, index) => `
+                    <div class="feature-card" style="animation-delay: ${index * 0.1}s" onclick="showNotification('Exploring ${feature.title}...')">
+                        <div class="icon"><i class="fas ${feature.icon}"></i></div>
+                        <h3>${feature.title}</h3>
+                        <p>${feature.desc}</p>
+                        <a href="#" class="learn-more" onclick="event.stopPropagation(); showNotification('Learning more about ${feature.title}...')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                `).join('');
+        }
+
+        function renderTech() {
+            const grid = document.getElementById('techGrid');
+            grid.innerHTML = techData.map(tech => `
+                    <span class="tech-item" onclick="showNotification('Exploring ${tech}...')">
+                        <i class="fas fa-code"></i> ${tech}
+                    </span>
+                `).join('');
+        }
+
+        function renderImpact() {
+            const grid = document.getElementById('impactGrid');
+            grid.innerHTML = impactData.map((item, index) => `
+                    <div class="impact-card" style="animation-delay: ${index * 0.2}s">
+                        <i class="fas ${item.icon}"></i>
+                        <div class="counter" id="counter-${index}">0</div>
+                        <p>${item.label}</p>
+                    </div>
+                `).join('');
+
+            // Animate counters
+            setTimeout(() => {
+                impactData.forEach((item, index) => {
+                    animateCounter(`counter-${index}`, item.count);
+                });
+            }, 500);
+        }
+
+        function animateCounter(elementId, target) {
+            const el = document.getElementById(elementId);
+            const targetNum = parseInt(target.replace(/[^0-9]/g, ''));
+            const suffix = target.replace(/[0-9]/g, '');
+            let current = 0;
+            const increment = targetNum / 60;
+            const interval = setInterval(() => {
+                current += increment;
+                if (current >= targetNum) {
+                    current = targetNum;
+                    clearInterval(interval);
+                }
+                el.textContent = Math.floor(current) + suffix;
+            }, 30);
+        }
+
+        // ============================================
+        // NOTIFICATION SYSTEM (User Feedback)
+        // ============================================
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            messageEl.textContent = message;
+            notification.classList.add('show');
+
+            // Auto-hide after 3 seconds
+            clearTimeout(window.notificationTimeout);
+            window.notificationTimeout = setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // ============================================
+        // SCROLL ANIMATIONS (Intersection Observer)
+        // ============================================
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // ============================================
+        // NAVBAR SCROLL EFFECT
+        // ============================================
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // ============================================
+        // LOADING SCREEN
+        // ============================================
+
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                // Show welcome notification
+                setTimeout(() => {
+                    showNotification('Welcome to HerWellness! 🌸 Your health journey starts here.');
+                }, 500);
+            }, 1500);
+        });
+
+        // ============================================
+        // SMOOTH SCROLLING
+        // ============================================
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ============================================
+        // INITIALIZE (Simulate API Call)
+        // ============================================
+
+        // Simulate API call to load data
+        function initApp() {
+            renderFeatures();
+            renderTech();
+            renderImpact();
+        }
+
+        // Start the app
+        initApp();
+
+        console.log('🌸 HerWellness Platform Loaded Successfully!');
+        console.log('💡 Backend simulation active - dynamic data loaded!');
+        console.log('📊 Features:', featuresData.length);
+        console.log('🛠️ Tech Stack:', techData.length);
+        console.log('📈 Impact Metrics:', impactData.length);
+    </script>
 
 </body>
 </html>
