@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HerWellness - AI-Powered Women's Health</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #faf7ff;
+            color: #1a1a2e;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 5%;
+            text-align: center;
+            background: linear-gradient(135deg, #faf7ff, #ede9fe);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #8b5cf6;
+            border: 2px solid #8b5cf6;
+        }
+
+        .btn-secondary:hover {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        /* Features */
+        .features {
+            padding: 60px 5%;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        .card .icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+        }
+
+        .card p {
+            color: #6b7280;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Stats */
+        .stats {
+            padding: 60px 5%;
+            background: linear-gradient(135deg, #faf7ff, #ede9fe);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 36px;
+            color: #8b5cf6;
+        }
+
+        .stat-item p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        /* Tech Stack */
+        .tech {
+            padding: 60px 5%;
+            background: white;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tech-item {
+            background: #ede9fe;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #8b5cf6;
+            transition: 0.3s;
+        }
+
+        .tech-item:hover {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* CTA */
+        .cta {
+            padding: 60px 5%;
+            text-align: center;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta .btn-primary {
+            background: white;
+            color: #8b5cf6;
+        }
+
+        .cta .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta .btn-secondary {
+            border-color: white;
+            color: white;
+        }
+
+        .cta .btn-secondary:hover {
+            background: white;
+            color: #8b5cf6;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 5%;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .nav a {
+                margin-left: 15px;
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav a {
+                margin: 0 10px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 14px;
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">💜 Her<span>Wellness</span></div>
+        <nav class="nav">
+            <a href="#features">Features</a>
+            <a href="#tech">Tech</a>
+            <a href="#cta">Get Started</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Your AI-Powered <span class="highlight">Women's Health</span> Platform</h1>
+        <p>Empowering women with personalized health tracking, AI-driven insights, and comprehensive wellness support.</p>
+        <a href="#cta" class="btn btn-primary">🚀 Get Started</a>
+        <a href="#features" class="btn btn-secondary">📋 Explore Features</a>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <h2 class="section-title">Comprehensive Wellness Features</h2>
+        <p class="section-subtitle">Everything you need for your health journey — all in one place.</p>
+        <div class="grid">
+            <div class="card">
+                <div class="icon">📅</div>
+                <h3>AI Menstrual Tracker</h3>
+                <p>Predict your cycle, fertile windows, and ovulation with AI-powered insights.</p>
+            </div>
+            <div class="card">
+                <div class="icon">👶</div>
+                <h3>Pregnancy Care</h3>
+                <p>Week-by-week updates, fetal development tracking, and nutrition guidance.</p>
+            </div>
+            <div class="card">
+                <div class="icon">❤️</div>
+                <h3>Reproductive Health</h3>
+                <p>Confidential records for PCOS, endometriosis, and hormonal health.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🧠</div>
+                <h3>Mental Wellness</h3>
+                <p>Mood tracking, stress assessments, meditation, and emotional check-ins.</p>
+            </div>
+            <div class="card">
+                <div class="icon">💪</div>
+                <h3>Fitness Planner</h3>
+                <p>Personalized workouts for menstruation, pregnancy, postpartum, and more.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🥗</div>
+                <h3>Nutrition Assistant</h3>
+                <p>Customized meal plans and nutrient recommendations for your lifestyle.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🤖</div>
+                <h3>AI Health Assistant</h3>
+                <p>Conversational AI answering your health questions in easy language.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🔔</div>
+                <h3>Smart Reminders</h3>
+                <p>Never miss medications, appointments, or checkups with smart alerts.</p>
+            </div>
+            <div class="card">
+                <div class="icon">📁</div>
+                <h3>Digital Health Records</h3>
+                <p>Securely store reports, prescriptions, and medical history.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🆘</div>
+                <h3>Emergency Support</h3>
+                <p>Quick-access emergency contacts and nearby hospitals.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🌍</div>
+                <h3>Multilingual Support</h3>
+                <p>Accessible in multiple regional languages for inclusivity.</p>
+            </div>
+            <div class="card">
+                <div class="icon">📶</div>
+                <h3>Offline Functionality</h3>
+                <p>Essential features work without internet. Syncs when online.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>50K+</h3>
+                <p>Women Empowered</p>
+            </div>
+            <div class="stat-item">
+                <h3>15K+</h3>
+                <p>Pregnancies Monitored</p>
+            </div>
+            <div class="stat-item">
+                <h3>30K+</h3>
+                <p>Wellness Sessions</p>
+            </div>
+            <div class="stat-item">
+                <h3>10+</h3>
+                <p>Languages Supported</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech" id="tech">
+        <h2 class="section-title">Technology Stack</h2>
+        <p class="section-subtitle">Built with modern, scalable technologies.</p>
+        <div class="tech-list">
+            <span class="tech-item">React.js</span>
+            <span class="tech-item">Flutter</span>
+            <span class="tech-item">HTML5</span>
+            <span class="tech-item">CSS3</span>
+            <span class="tech-item">JavaScript</span>
+            <span class="tech-item">Python</span>
+            <span class="tech-item">Flask</span>
+            <span class="tech-item">MongoDB</span>
+            <span class="tech-item">Machine Learning</span>
+            <span class="tech-item">NLP</span>
+            <span class="tech-item">Firebase</span>
+            <span class="tech-item">Firebase Auth</span>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="cta">
+        <h2>Ready to Take Control of Your Health?</h2>
+        <p>Join thousands of women who trust HerWellness for personalized health support.</p>
+        <a href="#" class="btn btn-primary">📱 Download App</a>
+        <a href="#" class="btn btn-secondary">ℹ️ Learn More</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 HerWellness. Made with ❤️ for women's health.</p>
+    </footer>
+
+</body>
+</html>
